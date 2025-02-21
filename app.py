@@ -5,14 +5,18 @@ from enc_rf import EncryptedStockVolatilityForecaster
 import os
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
+# Load environment variables from .env file
+load_dotenv()
 
-# Initialize database manager
+# Initialize database manager with values from .env file
 db_manager = DatabaseManager(
-    host="localhost",
-    port=3306,
-    database="dpsa_db",
-    user="root",
-    password="mysql123"
+    host=os.getenv("DB_HOST"),
+    port=int(os.getenv("DB_PORT")),  # Ensure it's an integer
+    database=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD")
 )
 
 # Initialize session state variables
