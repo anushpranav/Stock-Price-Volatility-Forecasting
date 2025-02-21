@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from db_util import DatabaseManager
-from enc_rf import EncryptedStockVolatilityForecaster
+from enc_rr import EncryptedStockVolatilityForecaster
 import os
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
