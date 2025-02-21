@@ -344,7 +344,7 @@ def main():
     
     # Example prediction with encrypted data
     company_name = "ZOMATO.NS"  # Replace with desired company
-    months_ahead = 10  # Replace with desired number of months (1-3)
+    months_ahead = 5  # Replace with desired number of months (1-3)
     
     print(f"\nMaking encrypted predictions for {company_name} for {months_ahead} months ahead...")
     predictions = forecaster.encrypted_predict_volatility(company_name, months_ahead)
