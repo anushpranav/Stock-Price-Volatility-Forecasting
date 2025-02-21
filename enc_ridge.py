@@ -361,6 +361,37 @@ class EncryptedStockVolatilityForecaster:
         plt.tight_layout()
         
         return plt
+    
+    def display_model_metrics(self):
+        """Display model accuracy and classification report"""
+        # Get training data
+        X, y, encrypted_X, encrypted_y = self.prepare_encrypted_features()
+        
+        # Get predictions on training data
+        y_pred = self.model.predict(X)
+        
+        # Convert continuous predictions to binary classes for classification metrics
+        # Using median as threshold for binary classification
+        threshold = np.median(y)
+        y_binary = (y > threshold).astype(int)
+        y_pred_binary = (y_pred > threshold).astype(int)
+        
+        # Calculate accuracy and classification report
+        from sklearn.metrics import accuracy_score, classification_report
+        
+        accuracy = accuracy_score(y_binary, y_pred_binary)
+        report = classification_report(y_binary, y_pred_binary)
+        
+        print(f"Accuracy: {accuracy:.4f}\n")
+        print("Classification Report:")
+        print(report)
+        
+        # Display first 5 encrypted vectors
+        print("\nFirst 5 encrypted vectors:")
+        for i in range(5):
+            print(f"\nVector {i+1}:")
+            print(encrypted_X[i])
+
 
 def main():
     # Initialize forecaster with homomorphic encryption
@@ -381,10 +412,13 @@ def main():
         print("Loading and preprocessing data...")
         forecaster.load_and_preprocess_data()
         forecaster.train_model()
+
+    print("\nDisplaying model metrics...")
+    forecaster.display_model_metrics()
     
     # Example prediction with encrypted data
     company_name = "ITC.NS"  # Replace with desired company
-    months_ahead = 3  # Replace with desired number of months
+    months_ahead = 1  # Replace with desired number of months
     
     print(f"\nMaking encrypted predictions for {company_name} for {months_ahead} months ahead...")
     try:
