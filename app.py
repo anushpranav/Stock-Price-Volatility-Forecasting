@@ -196,24 +196,17 @@ class StockVolatilityForecaster:
         })
     
     def plot_forecast(self, company_name, months_ahead):
-        """Plot historical and predicted volatility"""
-        # Get historical data
-        historical_data = self.data[self.data['Company'] == company_name].copy()
-        
+        """Plot only predicted volatility (no historical data)"""
         # Get predictions
         predictions = self.predict_volatility(company_name, months_ahead)
         
         plt.figure(figsize=(15, 7))
         
-        # Plot historical volatility
-        plt.plot(historical_data['Date'], historical_data['Volatility'], 
-                label='Historical Volatility', color='blue')
-        
-        # Plot predicted volatility
+        # Plot only predicted volatility (no historical data)
         plt.plot(predictions['Date'], predictions['Predicted_Volatility'], 
-                label='Predicted Volatility', color='red', linestyle='--')
+                label='Predicted Volatility', color='red')
         
-        plt.title(f'Stock Volatility Forecast for {company_name}')
+        plt.title(f'Stock Volatility Forecast for {company_name} - Next {months_ahead} Month(s)')
         plt.xlabel('Date')
         plt.ylabel('Volatility')
         plt.legend()
@@ -243,7 +236,7 @@ def main():
         forecaster.train_model()
     
     # Example prediction
-    company_name = "JIOFIN.NS"  # Replace with desired company
+    company_name = "ZOMATO.NS"  # Replace with desired company
     months_ahead = 2  # Replace with desired number of months (1-3)
     
     print(f"\nMaking predictions for {company_name} for {months_ahead} months ahead...")
