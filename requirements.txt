@@ -1,0 +1,12 @@
+# Python dependencies for Stock-Price-Volatility-Forecasting
+streamlit
+pandas
+numpy
+scikit-learn
+matplotlib
+plotly
+mysql-connector-python
+bcrypt
+python-dotenv
+tenseal
+joblib 

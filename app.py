@@ -40,7 +40,31 @@ def load_forecaster():
 
 def show_login_page():
     """Display the login page"""
-    col1, col2, col3 = st.columns([1, 3, 1])
+    st.markdown("""
+        <style>
+        div[data-testid="column"] {
+            padding: 0;
+        }
+        div[data-testid="stForm"] > div:first-child {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        div.row-widget.stButton {
+            text-align: center;
+        }
+        .stButton > button {
+            margin: 0 auto;
+            display: block;
+        }
+        /* Center the form submit button */
+        section[data-testid="stFormSubmitButton"] > button {
+            margin: 0 auto;
+            display: block;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    _, col2, _ = st.columns([2, 1, 2])
     
     with col2:
         st.title("Login")
@@ -49,7 +73,9 @@ def show_login_page():
         with st.form("login_form"):
             username = st.text_input("Username", key="login_username")
             password = st.text_input("Password", type="password")
-            submit = st.form_submit_button("Login")
+            col1, col2, col3 = st.columns([1, 1, 1])
+            with col2:
+                submit = st.form_submit_button("Login")
             
             if submit:
                 success, message, user = db_manager.login_user(username, password)
@@ -68,7 +94,31 @@ def show_login_page():
 
 def show_register_page():
     """Display the registration page"""
-    col1, col2, col3 = st.columns([1, 3, 1])
+    st.markdown("""
+        <style>
+        div[data-testid="column"] {
+            padding: 0;
+        }
+        div[data-testid="stForm"] > div:first-child {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        div.row-widget.stButton {
+            text-align: center;
+        }
+        .stButton > button {
+            margin: 0 auto;
+            display: block;
+        }
+        /* Center the form submit button */
+        section[data-testid="stFormSubmitButton"] > button {
+            margin: 0 auto;
+            display: block;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    _, col2, _ = st.columns([2, 1, 2])
     
     with col2:
         st.title("Register")
@@ -79,7 +129,9 @@ def show_register_page():
             email = st.text_input("Email")
             password = st.text_input("Password", type="password")
             confirm_password = st.text_input("Confirm Password", type="password")
-            submit = st.form_submit_button("Register")
+            col1, col2, col3 = st.columns([1, 1, 1])
+            with col2:
+                submit = st.form_submit_button("Register")
             
             if submit:
                 if password != confirm_password:
@@ -142,8 +194,14 @@ def show_home_page():
                     )
                     
                     st.plotly_chart(fig, use_container_width=True)
-                    st.subheader("Detailed Predictions")
-                    st.dataframe(predictions.set_index('Date'))
+
+                    # Creating columns with a larger center area
+                    colA, colB, colC = st.columns([1, 2, 1])  # Adjusting the width ratio
+
+                    with colB:
+                        st.subheader("Detailed Predictions")
+                        st.dataframe(predictions.set_index('Date'), use_container_width=True)  # Makes it fully stretchable
+
                     
         except Exception as e:
             st.error(f"Error: {str(e)}")
@@ -151,17 +209,11 @@ def show_home_page():
 def main():
     st.set_page_config(page_title="Stock Volatility Forecaster", layout="wide")
     
-    # Minimal CSS just for centering titles and basic spacing
+    # Basic styling for headers
     st.markdown("""
         <style>
-        /* Center titles and headers */
         .stTitle, h1, h2, h3 {
             text-align: center;
-        }
-        
-        /* Basic spacing for form elements */
-        .stForm > div {
-            margin-bottom: 1rem;
         }
         </style>
     """, unsafe_allow_html=True)
